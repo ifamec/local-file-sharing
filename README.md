@@ -206,6 +206,11 @@ For production use, consider adding:
 # Make executable
 chmod +x file-sharing-server-linux
 ```
+On macOS, if prompt shows "file-sharing-server-macos" Not Opened:
+> Go to `System Settings` -> `Privacy & Security`.  
+> In "Security" section, check `"file-sharing-server-macos" was blocked to protect`.  
+> Click `Allow Anyway` and try executing the app again.  
+> Select `Open Anyway` in the prompt.
 
 **Firewall Blocking Access**
 - Windows: Allow through Windows Firewall
