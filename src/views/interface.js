@@ -61,7 +61,7 @@ function getWebInterface() {
                     <div class="upload-icon">📁</div>
                     <div class="upload-text">Drop files here or click to browse</div>
                     <div class="upload-subtext">All file types supported • Max 1GB per file</div>
-                    <button class="btn" onclick="document.getElementById('fileInput').click()">Choose Files</button>
+                    <button class="btn">Choose Files</button>
                 </div>
                 <input type="file" id="fileInput" multiple>
                 <div class="progress-bar" id="progressBar">
@@ -122,7 +122,7 @@ function getWebInterface() {
         
         function showNotification(message, type) {
             const notification = document.createElement('div'); notification.className = \`notification \${type}\`; notification.textContent = message; document.body.appendChild(notification);
-            setTimeout(() => notification.classList.add('show'), 100); setTimeout(() => { notification.classList.remove('show'); setTimeout(() => document.body.removeChild(notification), 300); }, 3000);
+            setTimeout(() => notification.classList.add('show'), 100); refreshFiles(); setTimeout(() => { notification.classList.remove('show'); setTimeout(() => document.body.removeChild(notification), 300); }, 3000);
         }
         
         refreshFiles(); setInterval(refreshFiles, 10000);
