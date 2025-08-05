@@ -2,6 +2,7 @@ const express = require('express');
 const chalk = require('chalk');
 const qrcode = require('qrcode-terminal');
 const open = require('open');
+const path = require('path');
 const { configureUpload } = require('./middleware/upload');
 const { setupRoutes } = require('./routes/api');
 const { ensureUploadDirectory } = require('./utils/fileSystem');
@@ -15,6 +16,25 @@ function startServer(options) {
     ensureUploadDirectory(UPLOAD_DIR);
     const app = express();
     const upload = configureUpload(UPLOAD_DIR);
+
+    // Properly serve static files from the public directory
+    app.use(express.static(path.join(__dirname, 'public'), {
+        setHeaders: (res, filePath) => {
+            // Set correct MIME types
+            if (filePath.endsWith('.css')) {
+                res.setHeader('Content-Type', 'text/css');
+            } else if (filePath.endsWith('.js')) {
+                res.setHeader('Content-Type', 'application/javascript');
+            }
+        }
+    }));
+
+    // Debug middleware to log requests
+    app.use((req, res, next) => {
+        console.log(`${chalk.blue('Request:')} ${req.method} ${req.path}`);
+        next();
+    })
+
 
     app.get('/', (req, res) => {
         res.send(getWebInterface());
