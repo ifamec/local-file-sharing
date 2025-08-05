@@ -4,12 +4,6 @@ A standalone server application that allows file sharing across your local netwo
 
 ## 🚀 Quick Start
 
-### Download & Run (Easiest)
-1. Download the executable for your platform from releases
-2. Run it: `./file-sharing-server-linux` (or double-click on Windows/macOS)
-3. Open browser to the displayed URL
-4. Share the network URL with other devices
-
 ### From Source
 ```bash
 # Clone or download the project

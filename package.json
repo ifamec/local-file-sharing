@@ -9,11 +9,11 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "build": "pkg . --output dist/file-sharing-server",
-    "build:all": "npm run build:win && npm run build:mac && npm run build:linux",
-    "build:win": "pkg . --targets node18-win-x64 --output dist/file-sharing-server-win.exe",
-    "build:mac": "pkg . --targets node18-macos-x64 --output dist/file-sharing-server-macos",
-    "build:linux": "pkg . --targets node18-linux-x64 --output dist/file-sharing-server-linux",
+    "build": "pkg . --output dist/local-file-sharing",
+    "build:all": "npm ddp && npm run build:win && npm run build:mac && npm run build:linux",
+    "build:win": "pkg . --compress Brotli --targets node18-win-x64 --output dist/local-file-sharing-v1.0.0-win.exe",
+    "build:mac": "pkg . --compress Brotli --targets node18-macos-x64 --output dist/local-file-sharing-v1.0.0-macos",
+    "build:linux": "pkg . --compress Brotli --targets node18-linux-x64 --output dist/local-file-sharing-v1.0.0-linux",
     "global": "npm install -g .",
     "test": "node app.js --help"
   },
@@ -22,7 +22,8 @@
       "app.js"
     ],
     "assets": [
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "src/public/**/*"
     ],
     "outputPath": "dist"
   },
