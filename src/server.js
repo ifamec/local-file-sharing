@@ -30,10 +30,10 @@ function startServer(options) {
     }));
 
     // Debug middleware to log requests
-    app.use((req, res, next) => {
-        console.log(`${chalk.blue('Request:')} ${req.method} ${req.path}`);
-        next();
-    })
+    // app.use((req, res, next) => {
+    //     console.log(`${chalk.blue('Request:')} ${req.method} ${req.path}`);
+    //     next();
+    // })
 
 
     app.get('/', (req, res) => {
