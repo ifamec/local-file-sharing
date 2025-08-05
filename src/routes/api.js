@@ -6,6 +6,11 @@ const { getFilesList } = require('../utils/fileSystem');
 const { getLocalIP } = require('../utils/network');
 
 function setupRoutes(app, uploadDir, upload, port) {
+    app.use((req, res, next) => {
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        next();
+    });
+
     app.get('/api/files', (req, res) => {
         try {
             const files = getFilesList(uploadDir);
@@ -22,18 +27,22 @@ function setupRoutes(app, uploadDir, upload, port) {
         }
 
         const clientIP = req.ip || req.connection.remoteAddress;
-        console.log(chalk.green(`✅ Upload complete: ${req.file.filename} from ${clientIP}`));
+        // Ensure filename is properly encoded for display
+        const decodedFilename = Buffer.from(req.file.filename, 'latin1').toString('utf8');
+        const decodedOriginalName = Buffer.from(req.file.originalname, 'latin1').toString('utf8');
+
+        console.log(chalk.green(`✅ Upload complete: ${decodedFilename} from ${clientIP}`));
 
         res.json({
             message: 'File uploaded successfully',
-            filename: req.file.filename,
-            originalName: req.file.originalname,
+            filename: decodedFilename,
+            originalName: decodedOriginalName,
             size: req.file.size
         });
     });
 
     app.get('/api/download/:filename', (req, res) => {
-        const filename = req.params.filename;
+        const filename = decodeURIComponent(req.params.filename);
         const filePath = path.join(uploadDir, filename);
 
         if (!fs.existsSync(filePath)) {
@@ -43,11 +52,18 @@ function setupRoutes(app, uploadDir, upload, port) {
         const clientIP = req.ip || req.connection.remoteAddress;
         console.log(chalk.cyan(`📥 Download: ${filename} to ${clientIP}`));
 
-        res.download(filePath, filename);
+
+        // Set the proper headers for the download
+        res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+        res.setHeader('Content-Type', 'application/octet-stream');
+
+        // Stream the file instead of using res.download for better handling of Unicode filenames
+        fs.createReadStream(filePath).pipe(res);
+
     });
 
     app.delete('/api/files/:filename', (req, res) => {
-        const filename = req.params.filename;
+        const filename = decodeURIComponent(req.params.filename);
         const filePath = path.join(uploadDir, filename);
 
         try {

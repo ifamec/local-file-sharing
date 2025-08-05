@@ -10,7 +10,7 @@ function configureUpload(uploadDir) {
             cb(null, uploadDir);
         },
         filename: (req, file, cb) => {
-            const originalName = file.originalname;
+            const originalName = Buffer.from(file.originalname, 'latin1').toString('utf8');
             const filePath = path.join(uploadDir, originalName);
 
             if (fs.existsSync(filePath)) {
@@ -30,7 +30,8 @@ function configureUpload(uploadDir) {
             fileSize: 1024 * 1024 * 1024 // 1GB limit
         },
         fileFilter: (req, file, cb) => {
-            console.log(chalk.blue(`📤 Uploading: ${file.originalname} (${formatFileSize(file.size || 0)})`));
+            const decodedName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+            console.log(chalk.blue(`📤 Uploading: ${decodedName} (${formatFileSize(file.size || 0)})`));
             cb(null, true);
         }
     });
