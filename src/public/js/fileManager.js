@@ -5,7 +5,7 @@ async function refreshFiles() {
     try {
         const response = await fetch('/api/files');
         const files = await response.json();
-        
+
         // Prevent unnecessary DOM rendering if files haven't changed
         const newFilesStr = JSON.stringify(files);
         if (window.lastFilesStr !== newFilesStr) {
