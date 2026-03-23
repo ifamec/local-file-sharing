@@ -27,7 +27,7 @@ cd local-file-sharing
 go mod download
 
 # Run the server directly
-go run main.go
+go run cmd/local-file-sharing/main.go
 ```
 
 ## 📦 Building Standalone Executables
@@ -58,25 +58,25 @@ For complete build instructions for Windows, macOS (Intel & Apple Silicon), and 
 
 ```bash
 # Custom port
-go run main.go --port 8080
+go run cmd/local-file-sharing/main.go --port 8080
 
 # Custom upload directory
-go run main.go --dir "C:\MySharedFiles"
+go run cmd/local-file-sharing/main.go --dir "$HOME/SharedFiles"
 
 # Show QR code for mobile access
-go run main.go --qr
+go run cmd/local-file-sharing/main.go --qr
 
 # Auto-open browser
-go run main.go --open
+go run cmd/local-file-sharing/main.go --open
 
 # Combine options
-.\local-file-sharing-win.exe -p 8080 -d "D:\Transfer" --qr --open
+.\local-file-sharing-win.exe -p 8080 -d "$HOME/SharedFiles" --qr --open
 ```
 
 ### Command Line Flags
 ```
 Options:
-  -p, --port <number>    port to run the server on (default: 3000)
+  -p, --port <number>    port to run the server on (default: 8080)
   -d, --dir <path>       upload directory path (default: user's Home SharedFiles folder)
   -o, --open             automatically open browser (default: false)
   -q, --qr               show QR code for mobile access
@@ -86,10 +86,10 @@ Options:
 ## 🌐 Network Access
 
 ### For Users on Host Machine
-- Open browser to: `http://localhost:3000` (or your chosen port)
+- Open browser to: `http://localhost:8080` (or your chosen port)
 
 ### For Other Devices on Network
-- Use the network URL displayed in console (e.g. `http://192.168.1.100:3000`)
+- Use the network URL displayed in console (e.g. `http://192.168.1.100:8080`)
 - Scan QR code directly from the terminal if the `--qr` option is used
 - Works perfectly on iOS, Android, and other computers!
 

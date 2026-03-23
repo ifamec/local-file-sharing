@@ -21,27 +21,27 @@ The application embeds the frontend static files into the executable itself so t
 ### Build for Windows:
 ```powershell
 # In PowerShell
-$env:GOOS="windows"; $env:GOARCH="amd64"; go build -o dist/local-file-sharing-win.exe main.go
+$env:GOOS="windows"; $env:GOARCH="amd64"; go build -ldflags="-s -w" -o dist/local-file-sharing-win.exe cmd/local-file-sharing/main.go
 
 # Or using CMD:
 set GOOS=windows
 set GOARCH=amd64
-go build -ldflags="-s -w" -o dist/local-file-sharing-win.exe main.go
+go build -ldflags="-s -w" -o dist/local-file-sharing-win.exe cmd/local-file-sharing/main.go
 ```
 
 ### Build for macOS (Intel):
 ```bash
-GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/local-file-sharing-macos-intel main.go
+GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/local-file-sharing-macos-intel cmd/local-file-sharing/main.go
 ```
 
 ### Build for macOS (Apple Silicon M1/M2/M3):
 ```bash
-GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/local-file-sharing-macos-arm64 main.go
+GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/local-file-sharing-macos-arm64 cmd/local-file-sharing/main.go
 ```
 
 ### Build for Linux:
 ```bash
-GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/local-file-sharing-linux main.go
+GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/local-file-sharing-linux cmd/local-file-sharing/main.go
 ```
 
 *(Note: The `-ldflags="-s -w"` reduces the binary size by omitting debug information.)*
@@ -54,7 +54,7 @@ Once built, you can run the executable directly.
 
 ```bash
 # Windows
-.\dist\local-file-sharing-win.exe --port 8080 --dir "D:\MySharedFiles" --open --qr
+.\dist\local-file-sharing-win.exe --port 8080 --dir "$HOME\\SharedFiles" --open --qr
 
 # macOS / Linux
 ./dist/local-file-sharing-macos-arm64 --port 8080 --dir ~/SharedFiles --open --qr

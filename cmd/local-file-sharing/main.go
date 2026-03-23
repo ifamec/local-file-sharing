@@ -1,7 +1,6 @@
 package main
 
 import (
-	"embed"
 	"flag"
 	"fmt"
 	"io/fs"
@@ -12,12 +11,10 @@ import (
 
 	"local-file-sharing/internal/api"
 	"local-file-sharing/internal/utils"
+	"local-file-sharing/web"
 
 	"github.com/gorilla/mux"
 )
-
-//go:embed src/public
-var embedStatic embed.FS
 
 func main() {
 	var port int
@@ -61,7 +58,7 @@ func main() {
 	apiHandler.RegisterRoutes(r)
 
 	// Serve static files from embedded FS
-	subFS, err := fs.Sub(embedStatic, "src/public")
+	subFS, err := fs.Sub(web.StaticFiles, "public")
 	if err != nil {
 		fmt.Printf("Error loading embedded static files: %v\n", err)
 		os.Exit(1)
