@@ -1,291 +1,126 @@
-# Local File Sharing Server
+# Local File Sharing Server (Go Edition)
 
-A standalone server application that allows file sharing across your local network through any web browser. No installation required on client devices!
+A lightning-fast, standalone server application that allows file sharing across your local network through any web browser. 
+
+Recently rewritten from Node.js to **Golang**, this project now consists of a single self-contained executable binary. The modern, Google Drive-inspired frontend is embedded directly into the executable, meaning **no installation or runtimes are required on client devices or the host**.
 
 ## 🚀 Quick Start
 
-### From Source
+### Pre-Compiled Binary
+If you have a pre-compiled binary for your system (e.g. `local-file-sharing-win.exe`), simply double click it or run it from your terminal:
+
+```powershell
+# Windows
+.\local-file-sharing-win.exe
+
+# macOS / Linux
+./local-file-sharing
+```
+
+### From Source (Requires Go 1.21+)
 ```bash
 # Clone or download the project
 git clone <your-repo-url>
-cd local-file-sharing-server
+cd local-file-sharing
 
-# Install dependencies
-npm install
+# Download dependencies
+go mod download
 
-# Run the server
-npm start
+# Run the server directly
+go run main.go
 ```
 
 ## 📦 Building Standalone Executables
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm
-
-### Build Process
-```bash
-# Install dependencies
-npm install
-
-# Build for all platforms
-chmod +x build.sh
-./build.sh
-
-# Or build manually
-npm run build:all
-```
-
-### Output Files
-After building, you'll find these executables in the `dist/` folder:
-- `file-sharing-server-win.exe` - Windows executable (~50MB)
-- `file-sharing-server-macos` - macOS executable (~50MB)
-- `file-sharing-server-linux` - Linux executable (~50MB)
+For complete build instructions for Windows, macOS (Intel & Apple Silicon), and Linux, please read the included **[Build Instructions (build.md)](build.md)** file!
 
 ## 🎯 Features
 
 ### Server Features
-- **Zero-config setup** - Just run and go
-- **Cross-platform** - Works on Windows, macOS, Linux
-- **Command-line interface** - Flexible configuration options
-- **Beautiful console output** - Colorful, informative logging
-- **QR code support** - Easy mobile device access
-- **Auto-browser opening** - Convenience feature
-- **Graceful shutdown** - Clean server stop with Ctrl+C
+- **Zero-config setup** - Just run and go!
+- **Single Binary** - Frontend HTML/CSS/JS is cleanly embedded using `//go:embed`
+- **Cross-platform** - Works natively on Windows, macOS, Linux
+- **Command-line interface** - Port, directory, and UI configuration options
+- **Beautiful console output** - Colorful, informative terminal logging
+- **QR code support** - Instantly access your drive from a mobile device
+- **Auto-browser opening** - Convenience feature on launch
+- **Graceful shutdown** - Clean server stop with `Ctrl+C`
 
 ### Web Interface Features
-- **Drag & drop upload** - Intuitive file sharing
+- **Google Drive Aesthetics** - Beautiful, dynamic, modern layout
+- **Drag & drop upload** - Intuitive file sharing region
 - **Progress indicators** - Visual upload feedback
-- **File management** - View, download, delete files
-- **Responsive design** - Works on all devices
-- **Real-time updates** - Automatic file list refresh
-- **Large file support** - Up to 1GB per file
+- **View Management** - Instantly toggle between Grid and List layouts
+- **Dynamic Sorting** - Sort by modified date, size, and name
+- **Real-time Engine** - The UI polls and refreshes seamlessly without flickering
+- **Large file support** - Fast stream handling
 
-## 🛠️ Usage Options
+## 🛠️ Configuration Options
 
-### Basic Usage
-```bash
-# Run with default settings
-./file-sharing-server-linux
-
-# Windows
-file-sharing-server-win.exe
-
-# macOS
-./file-sharing-server-macos
-```
-
-### Advanced Usage
 ```bash
 # Custom port
-./file-sharing-server-linux --port 8080
+go run main.go --port 8080
 
 # Custom upload directory
-./file-sharing-server-linux --dir ~/MySharedFiles
+go run main.go --dir "C:\MySharedFiles"
 
 # Show QR code for mobile access
-./file-sharing-server-linux --qr
+go run main.go --qr
 
-# Don't auto-open browser
-./file-sharing-server-linux --no-browser
+# Auto-open browser
+go run main.go --open
 
 # Combine options
-./file-sharing-server-linux --port 8080 --dir ~/Documents/Shared --qr
+.\local-file-sharing-win.exe -p 8080 -d "D:\Transfer" --qr --open
 ```
 
-### Command Line Options
+### Command Line Flags
 ```
 Options:
-  -V, --version          output the version number
-  -p, --port <number>    port to run the server on (default: "3000")
-  -d, --dir <path>       upload directory path (default: "~/SharedFiles")
-  -o, --open             automatically open browser (default: true)
+  -p, --port <number>    port to run the server on (default: 3000)
+  -d, --dir <path>       upload directory path (default: user's Home SharedFiles folder)
+  -o, --open             automatically open browser (default: false)
   -q, --qr               show QR code for mobile access
   --no-browser           disable browser auto-opening
-  -h, --help             display help for command
 ```
 
 ## 🌐 Network Access
 
 ### For Users on Host Machine
-- Open browser to: `http://localhost:3000`
+- Open browser to: `http://localhost:3000` (or your chosen port)
 
 ### For Other Devices on Network
-- Use the network URL displayed in console: `http://192.168.1.100:3000`
-- Scan QR code if `--qr` option is used
-- Works on phones, tablets, other computers
-
-### File Storage
-- Default location: `~/SharedFiles/` (user's home directory)
-- Custom location: Use `--dir` option
-- Files persist between server restarts
-- Organized by upload time (newest first)
-
-## 🔧 Installation Methods
-
-### Method 1: Standalone Executable (Recommended)
-- Download from releases
-- No Node.js installation required
-- Single file, ready to run
-- Perfect for end users
-
-### Method 2: Global NPM Package
-```bash
-# Install globally
-npm install -g .
-
-# Run from anywhere
-file-share --port 3000 --qr
-```
-
-### Method 3: Run from Source
-```bash
-# Development/testing
-npm install
-npm start
-
-# With options
-npm start -- --port 8080 --qr
-```
-
-## 🎨 Customization
-
-### Modify Default Settings
-Edit `app.js` to change:
-- Default port
-- Default upload directory
-- File size limits
-- UI colors and styling
-
-### Custom Branding
-- Replace the web interface HTML in `getWebInterface()`
-- Add your logo and colors
-- Customize the header and messaging
-
-### Extended Features
-Add new functionality:
-- User authentication
-- File encryption
-- Upload history
-- File expiration
-- Bandwidth limiting
+- Use the network URL displayed in console (e.g. `http://192.168.1.100:3000`)
+- Scan QR code directly from the terminal if the `--qr` option is used
+- Works perfectly on iOS, Android, and other computers!
 
 ## 🔒 Security Considerations
 
 ### Local Network Only
 - Server binds to all interfaces (`0.0.0.0`)
 - Intended for trusted local networks only
-- No built-in authentication
-
-### Production Considerations
-For production use, consider adding:
-- User authentication
-- HTTPS/SSL certificates
-- Rate limiting
-- File scanning
-- Access logging
+- No built-in user authentication
 
 ## 🐛 Troubleshooting
 
-### Common Issues
-
 **Port Already in Use**
+Run the server on a different port:
 ```bash
-# Try a different port
-./file-sharing-server-linux --port 3001
+./local-file-sharing --port 3001
 ```
 
 **Permission Denied (Linux/macOS)**
 ```bash
 # Make executable
-chmod +x file-sharing-server-linux
+chmod +x local-file-sharing
 ```
-On macOS, if prompt shows "file-sharing-server-macos" Not Opened:
-> Go to `System Settings` -> `Privacy & Security`.  
-> In "Security" section, check `"file-sharing-server-macos" was blocked to protect`.  
-> Click `Allow Anyway` and try executing the app again.  
-> Select `Open Anyway` in the prompt.
 
 **Firewall Blocking Access**
-- Windows: Allow through Windows Firewall
-- macOS: System Preferences > Security & Privacy > Firewall
-- Linux: Configure iptables/ufw as needed
-
-**Can't Access from Other Devices**
-- Ensure devices are on same network
-- Check firewall settings
-- Verify IP address is correct
-- Try disabling VPN if active
-
-### Debug Mode
-```bash
-# Enable verbose logging
-NODE_ENV=development ./file-sharing-server-linux
-```
-
-## 📊 Performance
-
-### File Size Limits
-- Default: 1GB per file
-- Configurable in source code
-- Depends on available disk space
-
-### Concurrent Users
-- Handles multiple simultaneous uploads/downloads
-- Performance depends on network and hardware
-- Tested with 10+ concurrent users
-
-### Memory Usage
-- Lightweight: ~50MB RAM usage
-- Scales with number of concurrent operations
-- Files are streamed, not loaded into memory
-
-## 🤝 Contributing
-
-### Development Setup
-```bash
-git clone <repo-url>
-cd local-file-sharing-server
-npm install
-npm run dev  # Auto-restart on changes
-```
-
-### Building
-```bash
-npm run build:all    # All platforms
-npm run build:win    # Windows only
-npm run build:mac    # macOS only
-npm run build:linux  # Linux only
-```
-
-### Testing
-```bash
-npm test            # Run basic tests
-npm start -- --help # Test CLI interface
-```
+- Windows: Allow the executable through Windows Defender Firewall.
+- macOS: System Preferences > Security & Privacy > Firewall.
+- Linux: Configure iptables/ufw as needed to allow your port through.
 
 ## 📄 License
-
 MIT License - feel free to use for personal or commercial projects.
 
-## 🆘 Support
-
-- Create issues for bugs or feature requests
-- Check existing issues before creating new ones
-- Provide system info and error messages for bug reports
-
-## 🚀 Future Features
-
-Planned enhancements:
-- [ ] User authentication
-- [ ] File encryption
-- [ ] Thumbnail generation for images
-- [ ] File preview in browser
-- [ ] Upload history and analytics
-- [ ] Automatic file cleanup
-- [ ] Mobile app companion
-- [ ] Docker container support
-
 ---
-
 **Made with ❤️ for easy local file sharing**
