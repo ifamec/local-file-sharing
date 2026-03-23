@@ -46,7 +46,6 @@ For complete build instructions for Windows, macOS (Intel & Apple Silicon), and 
 - **Graceful shutdown** - Clean server stop with `Ctrl+C`
 
 ### Web Interface Features
-- **Google Drive Aesthetics** - Beautiful, dynamic, modern layout
 - **Drag & drop upload** - Intuitive file sharing region
 - **Progress indicators** - Visual upload feedback
 - **View Management** - Instantly toggle between Grid and List layouts
@@ -76,7 +75,7 @@ go run cmd/local-file-sharing/main.go --open
 ### Command Line Flags
 ```
 Options:
-  -p, --port <number>    port to run the server on (default: 8080)
+  -p, --port <number>    port to run the server on (default: 3000)
   -d, --dir <path>       upload directory path (default: user's Home SharedFiles folder)
   -o, --open             automatically open browser (default: false)
   -q, --qr               show QR code for mobile access
@@ -86,10 +85,10 @@ Options:
 ## 🌐 Network Access
 
 ### For Users on Host Machine
-- Open browser to: `http://localhost:8080` (or your chosen port)
+- Open browser to: `http://localhost:3000` (or your chosen port)
 
 ### For Other Devices on Network
-- Use the network URL displayed in console (e.g. `http://192.168.1.100:8080`)
+- Use the network URL displayed in console (e.g. `http://192.168.1.100:3000`)
 - Scan QR code directly from the terminal if the `--qr` option is used
 - Works perfectly on iOS, Android, and other computers!
 

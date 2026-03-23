@@ -34,7 +34,7 @@ go build -ldflags="-s -w" -o dist/local-file-sharing-win.exe cmd/local-file-shar
 GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/local-file-sharing-macos-intel cmd/local-file-sharing/main.go
 ```
 
-### Build for macOS (Apple Silicon M1/M2/M3):
+### Build for macOS (Apple Silicon):
 ```bash
 GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/local-file-sharing-macos-arm64 cmd/local-file-sharing/main.go
 ```
