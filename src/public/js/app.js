@@ -37,6 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial file refresh
     refreshFiles();
 
-    // Set up auto-refresh every 10 seconds
-    setInterval(refreshFiles, 10000);
+    // Set up auto-refresh every 2 seconds
+    setInterval(refreshFiles, 2000);
 });

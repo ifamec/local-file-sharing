@@ -5,7 +5,13 @@ async function refreshFiles() {
     try {
         const response = await fetch('/api/files');
         const files = await response.json();
-        displayFiles(files);
+        
+        // Prevent unnecessary DOM rendering if files haven't changed
+        const newFilesStr = JSON.stringify(files);
+        if (window.lastFilesStr !== newFilesStr) {
+            window.lastFilesStr = newFilesStr;
+            displayFiles(files);
+        }
     } catch (error) {
         console.error('Failed to load files:', error);
     }
