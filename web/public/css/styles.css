@@ -163,7 +163,8 @@ body {
 }
 
 .sort-select {
-    padding: 6px 10px;
+    padding: 0 16px;
+    height: 48px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 14px;
@@ -171,6 +172,7 @@ body {
     background: var(--bg-white);
     outline: none;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .layout-toggle {
@@ -182,14 +184,15 @@ body {
 
 .layout-toggle .icon-btn {
     border-radius: 0;
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
 }
 
 .upload-area-small {
     border: 1px dashed var(--primary);
     border-radius: 8px;
-    padding: 12px;
+    padding: 0 16px;
+    height: 48px;
     margin: 0 24px 0 0;
     flex: 1;
     display: flex;
