@@ -39,7 +39,10 @@ if (uploadArea) {
 if (fileInput) {
     fileInput.addEventListener('change', (e) => {
         if (typeof handleFiles === 'function') {
-            handleFiles(e.target.files);
+            // Clone the file list so resetting doesn't destroy the references
+            handleFiles(Array.from(e.target.files));
+            // Reset the input value to allow the same file to trigger change events again
+            e.target.value = '';
         }
     });
 }
